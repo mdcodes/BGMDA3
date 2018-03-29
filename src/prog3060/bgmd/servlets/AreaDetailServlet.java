@@ -10,7 +10,6 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 import prog3060.bgmd.*;
-import prog3060.bgmd.beans.GeographicAreaBean;
 import prog3060.bgmd.daos.GeographicAreaDAO;
 
 import javax.servlet.ServletException;
@@ -46,18 +45,6 @@ public class AreaDetailServlet extends HttpServlet {
 		
 		else 
 		{
-			try 
-			{
-				List<GeographicAreaBean> areaDetails = gdao.getSingleGeoArea(areaName);
-				
-				request.setAttribute("areaDetails", areaDetails);
-				request.getRequestDispatcher("./detail.jsp").forward(request, response);
-			} 
-			catch (SQLException e)
-			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 		}
 	}
 

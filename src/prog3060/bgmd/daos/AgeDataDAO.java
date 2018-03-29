@@ -13,13 +13,15 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import prog3060.bgmd.beans.AgeDataBean;
+import javax.persistence.EntityManagerFactory;
+
 import prog3060.bgmd.beans.ConnectionBean;
+import prog3060.bgmd.entities.Age;
 
 public class AgeDataDAO {
 	
-	public List<AgeDataBean> getAgeData(){
-		List<AgeDataBean> ageData = new ArrayList<>();
+	public List<Age> getAgeData(){
+		List<Age> ageData = new ArrayList<>();
 		
 		try(Connection connection = ConnectionBean.getConnection();
 				Statement statement = connection.createStatement();
@@ -35,11 +37,11 @@ public class AgeDataDAO {
 						+ "AND GEOGRAPHICAREA = 1 "
 						+ "ORDER BY AGEGROUP, CENSUSYEAR.CENSUSYEAR")){
 			while(resultSet.next()) {
-				AgeDataBean adb = new AgeDataBean();
-				adb.setGroupName(resultSet.getString("DESCRIPTION"));
-				adb.setMalePopulation(resultSet.getInt("MALE"));
-				adb.setFemalePopulation(resultSet.getInt("FEMALE"));
-				adb.setYear(resultSet.getInt("CENSUSYEAR"));
+				Age adb = new Age();
+//				adb.setGroupName(resultSet.getString("DESCRIPTION"));
+//				adb.setMalePopulation(resultSet.getInt("MALE"));
+//				adb.setFemalePopulation(resultSet.getInt("FEMALE"));
+//				adb.setYear(resultSet.getInt("CENSUSYEAR"));
 				
 				ageData.add(adb);
 			}

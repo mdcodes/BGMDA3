@@ -17,7 +17,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import prog3060.bgmd.beans.AgeDataBean;
 import prog3060.bgmd.beans.ConnectionBean;
 import prog3060.bgmd.daos.AgeDataDAO;
 
@@ -40,8 +39,8 @@ public class AgeDataServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		List<AgeDataBean> ageGroup = addo.getAgeData();
-		request.setAttribute("ageGroup", ageGroup);
+//		List<Age> ageGroup = addo.getAgeData();
+//		request.setAttribute("ageGroup", ageGroup);
 		request.getRequestDispatcher("./agegroups.jsp").forward(request, response);
 	}
 

@@ -14,16 +14,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import prog3060.bgmd.beans.ConnectionBean;
-import prog3060.bgmd.beans.GeographicAreaBean;
+import prog3060.bgmd.entities.GeographicArea;
 
 public class GeographicAreaDAO {
 	
 	/***
 	 * Retrieves the corresponding Geographic areas based on a code passed from a radio button
 	 */
-	public List<GeographicAreaBean> getGeoAreasByLevel(int level) throws SQLException
+	public List<GeographicArea> getGeoAreasByLevel(int level) throws SQLException
 	{
-		List<GeographicAreaBean> gabList = new ArrayList<GeographicAreaBean>();
+		List<GeographicArea> gabList = new ArrayList<GeographicArea>();
 		
 		try(Connection connection = ConnectionBean.getConnection();
 				Statement statement = connection.createStatement();
@@ -32,8 +32,8 @@ public class GeographicAreaDAO {
 						+ "ON GEOGRAPHICAREA.geographicAreaID = AGE.geographicArea "
 						+ "WHERE LEVEL= " + level)){
 			while(resultSet.next()) {
-				GeographicAreaBean gab = new GeographicAreaBean();
-				gab.setName(resultSet.getString("NAME"));
+				GeographicArea gab = new GeographicArea();
+//				gab.setName(resultSet.getString("NAME"));
 				
 				gabList.add(gab);
 			}
@@ -52,9 +52,9 @@ public class GeographicAreaDAO {
 	 * @return the list of data
 	 * @throws SQLException
 	 */
-	public List<GeographicAreaBean> getSingleGeoArea(String searchName) throws SQLException
+	public List<GeographicArea> getSingleGeoArea(String searchName) throws SQLException
 	{
-		List<GeographicAreaBean> gabList = new ArrayList<GeographicAreaBean>();
+		List<GeographicArea> gabList = new ArrayList<GeographicArea>();
 		
 		try(Connection connection = ConnectionBean.getConnection();
 				Statement statement = connection.createStatement();
@@ -63,12 +63,12 @@ public class GeographicAreaDAO {
 						+ "ON GEOGRAPHICAREA.geographicAreaID = AGE.geographicArea "
 						+ "WHERE NAME= " + "'" + searchName + "'")){
 			while(resultSet.next()) {
-				GeographicAreaBean gab = new GeographicAreaBean();
-				gab.setName(resultSet.getString("NAME"));
-				gab.setCode(resultSet.getInt("CODE"));
-				gab.setLevel(resultSet.getInt("LEVEL"));
-				gab.setTotalPopulation(resultSet.getInt("COMBINED"));
-				gabList.add(gab);
+//				GeographicArea gab = new GeographicArea();
+//				gab.setName(resultSet.getString("NAME"));
+//				gab.setCode(resultSet.getInt("CODE"));
+//				gab.setLevel(resultSet.getInt("LEVEL"));
+//				gab.setTotalPopulation(resultSet.getInt("COMBINED"));
+//				gabList.add(gab);
 			}
 		} 
 		catch (SQLException e) 

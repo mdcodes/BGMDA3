@@ -183,7 +183,7 @@ public class ConnectionBean implements Serializable
 		
 		if(isConnected) {
 			EntityManager em = null;
-			String queryString = "FROM Age a "
+			String queryString = "SELECT a, ag, cy FROM Age a "
 					+ "JOIN AgeGroup ag WITH a.ageGroup = ag.ageGroupID "
 					+ "JOIN CensusYear cy WITH a.censusYear = cy.censusYearID "
 					+ "WHERE ag.ageGroupID IN (:nums)";

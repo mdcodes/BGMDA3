@@ -12,18 +12,19 @@
 			</tr>
 		</thead>
 	    <tbody>
-			    <c:forEach items="${requestScope.ageGroup }" var="item">
+			    <c:forEach items="${requestScope.ageGroup}" var="item">
 			    	<tr>
 			        	<td>${item.description}</td>
 			        	<c:forEach items="${requestScope.ageList}" var="item">
 				    		<td>${item.male}</td>
 				    		<td>${item.female}</td>
-				    		<td>${item.combined}</td>
-			    		</c:forEach>
-			        </tr>
-			    </c:forEach>
-			    
-		    
+				    		<td>${item.combined}</td>		
+				    	</c:forEach>
+				    	<c:forEach items="${requestScope.cenYear}" var="yearItem">
+				    			<td>${yearItem.censusYear}</td>
+				    	</c:forEach>
+				    </tr>
+	    		</c:forEach>
 	    </tbody>
     </table>
 </div>

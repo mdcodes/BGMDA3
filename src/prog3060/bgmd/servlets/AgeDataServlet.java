@@ -22,6 +22,7 @@ import prog3060.bgmd.beans.ConnectionBean;
 import prog3060.bgmd.daos.AgeDataDAO;
 import prog3060.bgmd.entities.Age;
 import prog3060.bgmd.entities.AgeGroup;
+import prog3060.bgmd.entities.CensusYear;
 
 /**
  * Servlet implementation class AgeDataServlet
@@ -51,17 +52,21 @@ public class AgeDataServlet extends HttpServlet {
 			
 			List<Age> ageList = new ArrayList<>();
 			List<AgeGroup> ageGroups = new ArrayList<>();
+			List<CensusYear> cenYears = new ArrayList<>();
 			
 			for(Object[] items : list) {
 				Age ageRoot = (Age) items[0];
 				AgeGroup ageGroup = (AgeGroup) items[1];
+				CensusYear cenYear = (CensusYear) items[2];
 				
 				ageList.add(ageRoot);
 				ageGroups.add(ageGroup);
+				cenYears.add(cenYear);
 			}
 			
 			request.setAttribute("ageList", ageList);
 			request.setAttribute("ageGroup", ageGroups);
+			request.setAttribute("cenYear", cenYears);
 			request.getRequestDispatcher("./agegroups.jsp").forward(request, response);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

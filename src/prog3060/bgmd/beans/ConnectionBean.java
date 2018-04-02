@@ -13,6 +13,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,6 +23,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.servlet.http.HttpSession;
 
+import prog3060.bgmd.entities.Age;
+import prog3060.bgmd.entities.AgeGroup;
 import prog3060.bgmd.entities.GeographicArea;
 
 public class ConnectionBean implements Serializable
@@ -132,5 +135,87 @@ public class ConnectionBean implements Serializable
 		}
 		
 		
+	}
+	
+	public List<GeographicArea> getAllGeoAreas(String areaId) throws SQLException{
+		
+		List<GeographicArea> list = new ArrayList<>();
+		
+		if(isConnected) {
+			EntityManager em = null;
+			String queryString = "FROM GeographicArea ga "
+					+ "JOIN Age a WITH ga.geographicAreaID = a.geographicArea "
+					+ "WHERE ga.geographicAreaID = :areaId";
+			
+			try {
+				em = createEntityManager();
+				em.getTransaction().begin();
+				
+				Query query = em.createQuery(queryString)
+						.setParameter("areaId", Integer.parseInt(areaId));
+				
+				list = query.getResultList();
+				
+				em.getTransaction().rollback();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				if(em != null && em.isOpen()) {
+					em.getTransaction().rollback();
+				}
+				e.printStackTrace();
+			}
+			finally {
+				if(em != null && em.isOpen()) {
+					em.close();
+				}
+			}
+			
+			return list;
+		}
+		else {
+			return list;
+		}
+	}
+	
+	public List<Object[]> getAgeGroups() throws SQLException{
+		
+		List<Object[]> list = new ArrayList<>();
+		
+		if(isConnected) {
+			EntityManager em = null;
+			String queryString = "FROM Age a "
+					+ "JOIN AgeGroup ag WITH a.ageGroup = ag.ageGroupID "
+					+ "JOIN CensusYear cy WITH a.censusYear = cy.censusYearID "
+					+ "WHERE ag.ageGroupID IN (:nums)";
+			List<Integer> nums = Arrays.asList(3, 9, 15, 22, 28, 34, 40, 46, 52, 58, 64, 70, 76, 83, 89, 95, 101, 108, 114, 120, 126);
+			try {
+				em = createEntityManager();
+				em.getTransaction().begin();
+				
+				Query query = em.createQuery(queryString);
+				query.setParameter("nums", nums);
+				query.setMaxResults(10);
+				
+				list = query.getResultList();
+				
+				em.getTransaction().rollback();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				if(em != null && em.isOpen()) {
+					em.getTransaction().rollback();
+				}
+				e.printStackTrace();
+			}
+			finally {
+				if(em != null && em.isOpen()) {
+					em.close();
+				}
+			}
+			
+			return list;
+		}
+		else {
+			return list;
+		}
 	}
 }

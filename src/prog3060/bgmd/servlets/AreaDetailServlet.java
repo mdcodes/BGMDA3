@@ -10,7 +10,9 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 import prog3060.bgmd.*;
+import prog3060.bgmd.beans.ConnectionBean;
 import prog3060.bgmd.daos.GeographicAreaDAO;
+import prog3060.bgmd.entities.GeographicArea;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -37,9 +39,23 @@ public class AreaDetailServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		String areaName = request.getParameter("name");
+		ConnectionBean cb = new ConnectionBean();
+		cb.setUsername("user");
+		cb.setPassword("123");
+		int areaId = Integer.parseInt(request.getParameter("name"));
 		
-		if(areaName.equals(null)) {
+		try {
+			List<GeographicArea> list = cb.getAllGeoAreas(areaId);
+			
+			request.setAttribute("areaDetails", list);
+			
+			request.getRequestDispatcher("./detail.jsp").forward(request, response);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		if(areaId == -1) {
 			throw new NullPointerException();
 		}
 		

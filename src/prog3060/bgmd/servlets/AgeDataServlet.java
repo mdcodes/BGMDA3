@@ -8,6 +8,7 @@ package prog3060.bgmd.servlets;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -19,6 +20,8 @@ import javax.servlet.http.HttpSession;
 
 import prog3060.bgmd.beans.ConnectionBean;
 import prog3060.bgmd.daos.AgeDataDAO;
+import prog3060.bgmd.entities.Age;
+import prog3060.bgmd.entities.AgeGroup;
 
 /**
  * Servlet implementation class AgeDataServlet
@@ -31,17 +34,41 @@ public class AgeDataServlet extends HttpServlet {
 	
 	@Override
 	public void init() {
-		addo = new AgeDataDAO();
-		ConnectionBean.getConnection();
 	}
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//		List<Age> ageGroup = addo.getAgeData();
-//		request.setAttribute("ageGroup", ageGroup);
-		request.getRequestDispatcher("./agegroups.jsp").forward(request, response);
+		
+		ConnectionBean cb = new ConnectionBean();
+		cb.setUsername("user");
+		cb.setPassword("123");
+		cb.setConnected(true);
+		
+		try {
+			List<Object[]> list = cb.getAgeGroups();
+			
+			List<Age> ageList = new ArrayList<>();
+			List<AgeGroup> ageGroups = new ArrayList<>();
+			
+			for(Object[] items : list) {
+				Age ageRoot = (Age) items[0];
+				AgeGroup ageGroup = (AgeGroup) items[1];
+				
+				ageList.add(ageRoot);
+				ageGroups.add(ageGroup);
+			}
+			
+			request.setAttribute("ageList", ageList);
+			request.setAttribute("ageGroup", ageGroups);
+			request.getRequestDispatcher("./agegroups.jsp").forward(request, response);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
 	}
 
 	/**

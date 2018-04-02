@@ -45,6 +45,8 @@ public class GeographicAreaServlet extends HttpServlet
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
 		ConnectionBean cb = new ConnectionBean();
+		cb.setUsername("user");
+		cb.setPassword("123");
 		try {
 			List<GeographicArea> areas = cb.getAllGeoAreas();
 			request.setAttribute("areas", areas);

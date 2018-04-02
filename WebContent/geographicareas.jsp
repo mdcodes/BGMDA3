@@ -11,7 +11,7 @@
 	    <tbody>
 				<c:forEach items="${areas}" var="areas">
 				<tr>
-					<td><a href="./AreaDetail?name=${areas.name}">${areas.name}</a></td>
+					<td><a href="./AreaDetail?name=${areas.geographicAreaID}">${areas.name}</a></td>
 				</tr>
 				</c:forEach>
 	    </tbody>

@@ -35,10 +35,6 @@ import prog3060.bgmd.beans.EntityManagerFactoryListener;
 @WebServlet("/LoginServlet")
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
-	
-	
-	
        
     @Override
     public void init() {
@@ -57,10 +53,11 @@ public class LoginServlet extends HttpServlet {
 		}
 		else {
 			ConnectionBean cb = new ConnectionBean();
-			cb.setUsername(username);
-			cb.setPassword(password);
+			session.setAttribute("username", username);
+			session.setAttribute("password", password);
+			session.setAttribute("connectionbean", cb);
 			try {
-				cb.OpenConnnection();
+				cb.OpenConnnection(username, password);
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

@@ -16,6 +16,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -25,8 +26,9 @@ import javax.servlet.http.HttpSession;
 
 import prog3060.bgmd.beans.ConnectionBean;
 import prog3060.bgmd.beans.EntityManagerFactoryListener;
-import prog3060.bgmd.daos.GeographicAreaDAO;
+import prog3060.bgmd.entities.CensusYear;
 import prog3060.bgmd.entities.GeographicArea;
+import prog3060.bgmd.beans.TotalIncomeBeanLocal;
 
 /**
  * Servlet implementation class GeographicAreaServlet
@@ -44,24 +46,29 @@ public class GeographicAreaServlet extends HttpServlet
 	@Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
-		ConnectionBean cb = new ConnectionBean();
-		cb.setUsername("user");
-		cb.setPassword("123");
-		try {
-			List<GeographicArea> areas = cb.getAllGeoAreas();
-			request.setAttribute("areas", areas);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		HttpSession session = request.getSession();
+		String user = (String) session.getAttribute("username");
+		String pass = (String) session.getAttribute("password");
+		ConnectionBean cb = (ConnectionBean) session.getAttribute("connectionbean");
+		if(ConnectionBean.isConnected()){
+			try {
+				List<GeographicArea> areas = cb.getAllGeoAreas(user, pass);
+				request.setAttribute("areas", areas);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			request.getRequestDispatcher("./geographicareas.jsp").forward(request, response);
 		}
-		request.getRequestDispatcher("./geographicareas.jsp").forward(request, response);
+		else{
+			request.getRequestDispatcher("./login.jsp").forward(request, response);
+		}
 	} 
 	
 	
 	@Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
-
     }
 
 }

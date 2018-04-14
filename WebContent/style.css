@@ -8,6 +8,31 @@ body{
     background: #98999b;
 }
 
+.navbar {
+    overflow: hidden;
+    background-color: black;
+    font-family: Arial;
+    width: 100%;
+}
+
+.navbar ul > li{
+	list-style-type: none;
+	text-decoration: none;
+}
+
+.navbar a {
+    float: left;
+    font-size: 16px;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+.navbar a:hover {
+    background-color: grey;
+}
+
 .form-format
 {
 	padding-left: 14px;
@@ -59,30 +84,13 @@ td a{
     float: right;
     width:90%;
 }
+
 h2, h1, h4{
     text-align: center;
 }
 
 
 
-.navbar {
-    overflow: hidden;
-    background-color: black;
-    font-family: Arial;
-    width: 100%;
-}
 
-.navbar a {
-    float: left;
-    font-size: 16px;
-    color: white;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-}
-
-.navbar a:hover {
-    background-color: grey;
-}
 
 

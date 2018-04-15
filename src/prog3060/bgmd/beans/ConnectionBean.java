@@ -35,7 +35,7 @@ public class ConnectionBean implements Serializable
 	String username;
 	String password;
 	static String message;
-	static boolean isConnected;
+	boolean isConnected;
 	
 	public ConnectionBean() {
 		super();
@@ -47,6 +47,22 @@ public class ConnectionBean implements Serializable
 		}
 	}
 
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
 	public static String getMessage() {
 		return message;
 	}
@@ -55,12 +71,12 @@ public class ConnectionBean implements Serializable
 		ConnectionBean.message = message;
 	}
 
-	public static boolean isConnected() {
+	public boolean isConnected() {
 		return isConnected;
 	}
 
-	public static void setConnected(boolean isConnected) {
-		ConnectionBean.isConnected = isConnected;
+	public void setConnected(boolean isConnected) {
+		this.isConnected = isConnected;
 	}
 
 	public void OpenConnnection(String user, String pass) throws SQLException

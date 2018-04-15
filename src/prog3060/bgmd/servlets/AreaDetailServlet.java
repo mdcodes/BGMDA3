@@ -50,13 +50,15 @@ public class AreaDetailServlet extends HttpServlet {
 		String areaId = request.getParameter("areaId");
 		int level = Integer.parseInt(request.getParameter("level"));
 //		int altCode = Integer.parseInt(request.getParameter("altCode"));
-		if(ConnectionBean.isConnected()) {
+		if(cb.isConnected()) {
 			try {
 				List<GeographicArea> geoList = cb.getGeoInfo(user, pass, areaId);
 				List<Age> ageList = cb.getAgeInfo(user, pass, areaId);
 				
-				GeographicArea ga = geoList.get(0); 
+				GeographicArea ga = geoList.get(0);
+				session.setAttribute("debugga", ga.getName());
 				CensusYear cy = ageList.get(0).getCensusYear();
+				session.setAttribute("debugcy", cy.getCensusYear());
 				
 				String reportString = totalIncomeBean.getResultFromLocal(ga, cy, user, pass);
 				session.setAttribute("output", reportString);

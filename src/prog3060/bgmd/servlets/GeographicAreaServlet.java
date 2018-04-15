@@ -47,18 +47,21 @@ public class GeographicAreaServlet extends HttpServlet
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
 		HttpSession session = request.getSession();
-		String user = (String) session.getAttribute("username");
-		String pass = (String) session.getAttribute("password");
 		ConnectionBean cb = (ConnectionBean) session.getAttribute("connectionbean");
-		if(ConnectionBean.isConnected()){
-			try {
-				List<GeographicArea> areas = cb.getAllGeoAreas(user, pass);
-				request.setAttribute("areas", areas);
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+		if(cb != null) {
+			if(cb.isConnected()){
+				try {
+					List<GeographicArea> areas = cb.getAllGeoAreas(cb.getUsername(), cb.getPassword());
+					request.setAttribute("areas", areas);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				request.getRequestDispatcher("./geographicareas.jsp").forward(request, response);
 			}
-			request.getRequestDispatcher("./geographicareas.jsp").forward(request, response);
+			else{
+				request.getRequestDispatcher("./login.jsp").forward(request, response);
+			}
 		}
 		else{
 			request.getRequestDispatcher("./login.jsp").forward(request, response);

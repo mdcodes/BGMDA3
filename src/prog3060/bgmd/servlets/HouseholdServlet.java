@@ -45,7 +45,7 @@ public class HouseholdServlet extends HttpServlet {
 		String user = (String) session.getAttribute("username");
 		String pass = (String) session.getAttribute("password");
 		ConnectionBean cb = (ConnectionBean) session.getAttribute("connectionbean");
-		if(ConnectionBean.isConnected()) {
+		if(cb.isConnected()) {
 			
 			try {
 				List<Household> list = cb.getHouseholdData(user, pass);

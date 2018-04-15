@@ -55,14 +55,16 @@ public class LoginServlet extends HttpServlet {
 			ConnectionBean cb = new ConnectionBean();
 			session.setAttribute("username", username);
 			session.setAttribute("password", password);
-			session.setAttribute("connectionbean", cb);
 			try {
+				cb.setUsername(username);
+				cb.setPassword(password);
 				cb.OpenConnnection(username, password);
+				session.setAttribute("connectionbean", cb);
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			if(ConnectionBean.isConnected()) {
+			if(cb.isConnected()) {
 				response.sendRedirect("./index.jsp");
 			}
 			else {
